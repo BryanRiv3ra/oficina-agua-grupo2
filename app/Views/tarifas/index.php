@@ -41,13 +41,19 @@
                     <?php
                     $hoy = date('Y-m-d');
 
+                    $activa = (int) $tarifa['activo'] === 1;
+
+                    $futura =
+                     $activa
+                     && $tarifa['vigente_desde'] > $hoy;
+
                     $vigente =
-                        (int) $tarifa['activo'] === 1
-                        && $tarifa['vigente_desde'] <= $hoy
-                        && (
+                       $activa
+                     && $tarifa['vigente_desde'] <= $hoy
+                     && (
                            empty($tarifa['vigente_hasta'])
-                           || $tarifa['vigente_hasta'] >= $hoy
-                        );
+                          || $tarifa['vigente_hasta'] >= $hoy
+                     );
                     ?>
 
                     <tr>
@@ -66,14 +72,24 @@
                         </td>
 
                         <td>
-                            <?php if ($vigente): ?>
+                          <?php if ($futura): ?>
+
+                              <span class="badge text-bg-info">
+                                  Programada
+                             </span>
+
+                            <?php elseif ($vigente): ?>
+
                                 <span class="badge text-bg-success">
                                     Vigente
+                               </span>
+
+                         <?php else: ?>
+
+                               <span class="badge text-bg-secondary">
+                                   Vencida
                                 </span>
-                            <?php else: ?>
-                                <span class="badge text-bg-secondary">
-                                    Vencida
-                                </span>
+
                             <?php endif; ?>
                         </td>
 

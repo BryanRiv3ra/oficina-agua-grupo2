@@ -63,4 +63,13 @@ public function existeSolapamiento(
 
     return $builder->countAllResults() > 0;
 }
+
+public function obtenerTarifaAbiertaAnterior(string $desde): ?array
+{
+    return $this->where('activo', 1)
+        ->where('vigente_hasta IS NULL', null, false)
+        ->where('vigente_desde <', $desde)
+        ->orderBy('vigente_desde', 'DESC')
+        ->first();
+}
 }

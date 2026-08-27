@@ -49,11 +49,51 @@ class TarifaController extends BaseController
     $datos = $this->request->getPost();
 
     $desde = $datos['vigente_desde'] ?? null;
+
     $hasta = !empty($datos['vigente_hasta'])
         ? $datos['vigente_hasta']
         : null;
 
-    if ($desde && $this->tarifaModel->existeSolapamiento($desde, $hasta)) {
+    $datos['vigente_hasta'] = $hasta;
+
+    // Validar fecha de inicio
+    if (!$desde) {
+        return redirect()->back()
+            ->withInput()
+            ->with('errors', [
+                'La fecha de inicio es obligatoria.'
+            ]);
+    }
+
+    // Validar que la fecha final no sea anterior a la inicial
+    if ($hasta !== null && $hasta < $desde) {
+        return redirect()->back()
+            ->withInput()
+            ->with('errors', [
+                'La fecha de finalización debe ser igual o posterior a la fecha de inicio.'
+            ]);
+    }
+
+    // Buscar la tarifa abierta anterior
+    $tarifaAnterior = $this->tarifaModel
+        ->obtenerTarifaAbiertaAnterior($desde);
+
+    /*
+     * Verificar solapamientos.
+     *
+     * Si existe una tarifa abierta anterior, se excluye porque
+     * esa tarifa será cerrada automáticamente antes de guardar
+     * la nueva.
+     */
+    $idExcluir = $tarifaAnterior
+        ? (int) $tarifaAnterior['id']
+        : null;
+
+    if ($this->tarifaModel->existeSolapamiento(
+        $desde,
+        $hasta,
+        $idExcluir
+    )) {
         return redirect()->back()
             ->withInput()
             ->with('errors', [
@@ -61,10 +101,42 @@ class TarifaController extends BaseController
             ]);
     }
 
+    $db = \Config\Database::connect();
+
+    $db->transStart();
+
+    // Cerrar automáticamente la tarifa abierta anterior
+    if ($tarifaAnterior) {
+        $fechaFinAnterior = date(
+            'Y-m-d',
+            strtotime($desde . ' -1 day')
+        );
+
+        $this->tarifaModel->update(
+            $tarifaAnterior['id'],
+            [
+                'vigente_hasta' => $fechaFinAnterior,
+            ]
+        );
+    }
+
+    // Guardar la nueva tarifa
     if (!$this->tarifaModel->save($datos)) {
+        $db->transRollback();
+
         return redirect()->back()
             ->withInput()
             ->with('errors', $this->tarifaModel->errors());
+    }
+
+    $db->transComplete();
+
+    if ($db->transStatus() === false) {
+        return redirect()->back()
+            ->withInput()
+            ->with('errors', [
+                'No fue posible guardar la tarifa.'
+            ]);
     }
 
     return redirect()->to('/tarifas')
@@ -98,11 +170,37 @@ class TarifaController extends BaseController
     $datos = $this->request->getPost();
 
     $desde = $datos['vigente_desde'] ?? null;
+
     $hasta = !empty($datos['vigente_hasta'])
         ? $datos['vigente_hasta']
         : null;
 
-    if ($desde && $this->tarifaModel->existeSolapamiento($desde, $hasta, (int) $id)) {
+    $datos['vigente_hasta'] = $hasta;
+
+    // Validar fecha de inicio
+    if (!$desde) {
+        return redirect()->back()
+            ->withInput()
+            ->with('errors', [
+                'La fecha de inicio es obligatoria.'
+            ]);
+    }
+
+    // Validar que la fecha final no sea anterior a la inicial
+    if ($hasta !== null && $hasta < $desde) {
+        return redirect()->back()
+            ->withInput()
+            ->with('errors', [
+                'La fecha de finalización debe ser igual o posterior a la fecha de inicio.'
+            ]);
+    }
+
+    // Validar solapamiento con otras tarifas
+    if ($this->tarifaModel->existeSolapamiento(
+        $desde,
+        $hasta,
+        (int) $id
+    )) {
         return redirect()->back()
             ->withInput()
             ->with('errors', [
