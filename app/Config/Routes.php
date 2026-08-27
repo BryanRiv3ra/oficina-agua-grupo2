@@ -28,3 +28,4 @@ $routes->get('tarifas/nuevo', 'TarifaController::create');
 $routes->post('tarifas/guardar', 'TarifaController::store');
 $routes->get('tarifas/editar/(:num)', 'TarifaController::edit/$1');
 $routes->post('tarifas/actualizar/(:num)', 'TarifaController::update/$1');
+$routes->post('tarifas/desactivar/(:num)', 'TarifaController::desactivar/$1');
