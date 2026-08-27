@@ -94,13 +94,31 @@
                         </td>
 
                         <td class="text-end">
-                            <a
-                                href="<?= site_url('tarifas/editar/' . $tarifa['id']) ?>"
-                                class="btn btn-sm btn-outline-primary"
-                            >
-                                Editar
-                            </a>
-                        </td>
+    <a
+        href="<?= site_url('tarifas/editar/' . $tarifa['id']) ?>"
+        class="btn btn-sm btn-outline-primary"
+    >
+        Editar
+    </a>
+
+    <?php if ((int) $tarifa['activo'] === 1): ?>
+        <form
+            action="<?= site_url('tarifas/desactivar/' . $tarifa['id']) ?>"
+            method="post"
+            class="d-inline"
+            onsubmit="return confirm('¿Está seguro de desactivar esta tarifa?');"
+        >
+            <?= csrf_field() ?>
+
+            <button
+                type="submit"
+                class="btn btn-sm btn-outline-danger"
+            >
+                Desactivar
+            </button>
+        </form>
+    <?php endif; ?>
+</td>
                     </tr>
 
                 <?php endforeach; ?>

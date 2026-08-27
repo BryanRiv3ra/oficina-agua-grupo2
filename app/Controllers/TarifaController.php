@@ -217,4 +217,33 @@ class TarifaController extends BaseController
     return redirect()->to('/tarifas')
         ->with('mensaje', 'Tarifa actualizada correctamente.');
 }
+
+
+/**
+ * Desactivar una tarifa
+ */
+public function desactivar($id)
+{
+    $tarifa = $this->tarifaModel->find($id);
+
+    if (!$tarifa) {
+        return redirect()->to('/tarifas')
+            ->with('error', 'Tarifa no encontrada.');
+    }
+
+    if ((int) $tarifa['activo'] === 0) {
+        return redirect()->to('/tarifas')
+            ->with('error', 'La tarifa ya está desactivada.');
+    }
+
+    if (!$this->tarifaModel->update($id, [
+        'activo' => 0,
+    ])) {
+        return redirect()->to('/tarifas')
+            ->with('error', 'No fue posible desactivar la tarifa.');
+    }
+
+    return redirect()->to('/tarifas')
+        ->with('mensaje', 'Tarifa desactivada correctamente.');
+}
 }
