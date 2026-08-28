@@ -21,3 +21,11 @@ $routes->post('clientes/actualizar/(:num)', 'ClienteController::update/$1');
 $routes->post('clientes/eliminar/(:num)', 'ClienteController::delete/$1');
 $routes->get('clientes/desactivados', 'ClienteController::desactivados');
 $routes->post('clientes/reactivar/(:num)', 'ClienteController::reactivar/$1');
+
+// Tarifas
+$routes->get('tarifas', 'TarifaController::index');
+$routes->get('tarifas/nuevo', 'TarifaController::create');
+$routes->post('tarifas/guardar', 'TarifaController::store');
+$routes->get('tarifas/editar/(:num)', 'TarifaController::edit/$1');
+$routes->post('tarifas/actualizar/(:num)', 'TarifaController::update/$1');
+$routes->post('tarifas/desactivar/(:num)', 'TarifaController::desactivar/$1');
