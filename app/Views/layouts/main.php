@@ -18,6 +18,15 @@
     <?= $this->include('layouts/partials/navbar') ?>
 
     <div class="container-fluid py-4 px-3 px-md-4">
+
+      <?php if (session('error')): ?>
+        <div class="alert alert-danger"><?= esc(session('error')) ?></div>
+      <?php endif; ?>
+
+      <?php if (session('mensaje')): ?>
+        <div class="alert alert-success"><?= esc(session('mensaje')) ?></div>
+      <?php endif; ?>
+
       <?= $this->renderSection('contenido') ?>
     </div>
   </div>
