@@ -22,7 +22,7 @@ class RolesUsuariosSeeder extends Seeder
             'rol_id'        => 1, // Administrador (el primero insertado arriba)
             'nombre'        => 'Administrador General',
             'email'         => 'admin@oficina-agua.local',
-            'password_hash' => '$2b$10$O2ThNxEHI4QaExRvyx9zyedP5KjBeijNCiJ0QVsFMVZkVrBlMJrK.',
+            'password_hash' => password_hash('Admin1234', PASSWORD_DEFAULT),
             'activo'        => 1,
         ]);
     }
