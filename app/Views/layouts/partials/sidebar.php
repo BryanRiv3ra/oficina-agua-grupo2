@@ -1,11 +1,11 @@
 <div class="offcanvas-lg offcanvas-start barra-lateral" tabindex="-1" id="sidebar">
   <div class="offcanvas-header d-lg-none">
-    <span class="navbar-brand fw-bold text-white">💧 Oficina del Agua</span>
+    <span class="navbar-brand fw-bold text-white">💧 AQUORA</span>
     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"></button>
   </div>
   <div class="offcanvas-body d-flex flex-column p-0">
     <div class="px-3 pt-3 pb-3 d-none d-lg-block">
-      <span class="navbar-brand fw-bold text-white">💧 Oficina del Agua</span>
+      <span class="navbar-brand fw-bold text-white">💧 AQUORA</span>
     </div>
     <nav class="nav flex-column flex-grow-1 px-2">
       <a href="<?= site_url('dashboard') ?>" class="nav-link enlace-menu <?= ($vistaActiva ?? '') === 'panel' ? 'activo' : '' ?>">
