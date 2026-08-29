@@ -29,3 +29,8 @@ $routes->post('tarifas/guardar', 'TarifaController::store');
 $routes->get('tarifas/editar/(:num)', 'TarifaController::edit/$1');
 $routes->post('tarifas/actualizar/(:num)', 'TarifaController::update/$1');
 $routes->post('tarifas/desactivar/(:num)', 'TarifaController::desactivar/$1');
+
+// Autenticación
+$routes->get('login',   'AuthController::login');
+$routes->post('login',  'AuthController::procesarLogin');
+$routes->post('logout', 'AuthController::logout');
