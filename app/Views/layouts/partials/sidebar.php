@@ -10,6 +10,7 @@ $opcionesMenu = [
     ['url' => 'lecturas',   'texto' => 'Registrar lectura', 'icono' => '📋', 'clave' => 'lectura',    'roles' => ['Administrador', 'Lector']],
     ['url' => 'pagos',      'texto' => 'Registrar pago',    'icono' => '💵', 'clave' => 'pago',       'roles' => ['Administrador', 'Secretaria']],
     ['url' => 'tarifas',    'texto' => 'Tarifas',           'icono' => '🧾', 'clave' => 'tarifas',    'roles' => ['Administrador']],
+    ['url' => 'estado-cuenta', 'texto' => 'Estado de cuenta', 'icono' => '💰', 'clave' => 'estado_cuenta', 'roles' => ['Administrador', 'Secretaria']],
 ];
 ?>
 <div class="offcanvas-lg offcanvas-start barra-lateral" tabindex="-1" id="sidebar">

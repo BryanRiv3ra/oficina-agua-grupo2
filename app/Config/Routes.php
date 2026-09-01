@@ -34,3 +34,4 @@ $routes->post('tarifas/desactivar/(:num)', 'TarifaController::desactivar/$1');
 $routes->get('login',   'AuthController::login');
 $routes->post('login',  'AuthController::procesarLogin');
 $routes->post('logout', 'AuthController::logout');
+$routes->get('estado-cuenta', 'EstadoCuentaController::index');
