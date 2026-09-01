@@ -39,13 +39,14 @@ class ClienteModel extends Model
         $builder->join('contadores ct', 'ct.cliente_id = c.id', 'left');
         $builder->join('lecturas l', 'l.contador_id = ct.id', 'left');
         $builder->join('pagos p', 'p.lectura_id = l.id', 'left');
+        $builder->where('c.activo', 1); // 🆕 excluir clientes desactivados
         $builder->groupBy('c.id, c.nombre');
         $builder->orderBy('c.nombre', 'ASC');
 
         $resultados = $builder->get()->getResultArray();
 
         foreach ($resultados as &$fila) {
-        $fila['estado'] = ($fila['lecturas_sin_pago'] > 0) ? 'Pendiente' : 'Al día';
+            $fila['estado'] = ($fila['lecturas_sin_pago'] > 0) ? 'Pendiente' : 'Al día';
         }
 
         return $resultados;
