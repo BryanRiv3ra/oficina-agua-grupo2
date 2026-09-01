@@ -33,7 +33,7 @@ $routes->post('tarifas/desactivar/(:num)', 'TarifaController::desactivar/$1');
 // Lecturas
 $routes->get('lecturas', 'LecturaController::index');
 $routes->get('lecturas/registrar/(:num)', 'LecturaController::create/$1');
-
+$routes->post('lecturas/guardar', 'LecturaController::store');
 
 // Autenticación
 $routes->get('login',   'AuthController::login');
