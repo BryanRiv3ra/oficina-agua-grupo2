@@ -30,6 +30,11 @@ $routes->get('tarifas/editar/(:num)', 'TarifaController::edit/$1');
 $routes->post('tarifas/actualizar/(:num)', 'TarifaController::update/$1');
 $routes->post('tarifas/desactivar/(:num)', 'TarifaController::desactivar/$1');
 
+// Lecturas
+$routes->get('lecturas', 'LecturaController::index');
+$routes->get('lecturas/registrar/(:num)', 'LecturaController::create/$1');
+
+
 // Autenticación
 $routes->get('login',   'AuthController::login');
 $routes->post('login',  'AuthController::procesarLogin');
