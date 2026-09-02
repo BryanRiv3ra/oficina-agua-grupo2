@@ -40,3 +40,6 @@ $routes->get('login',   'AuthController::login');
 $routes->post('login',  'AuthController::procesarLogin');
 $routes->post('logout', 'AuthController::logout');
 $routes->get('estado-cuenta', 'EstadoCuentaController::index');
+
+//Recibos
+$routes->get('recibo/(:num)', 'ReciboController::ver/$1');

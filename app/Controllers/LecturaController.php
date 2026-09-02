@@ -246,8 +246,10 @@ public function store()
             ->with('error', 'No fue posible guardar la lectura.');
     }
 
+    $lecturaId = $this->lecturaModel->getInsertID();
+
     return redirect()
-        ->to('/lecturas')
+        ->to('/recibo/' . $lecturaId)
         ->with(
             'mensaje',
             'Lectura registrada correctamente. Consumo: ' .
@@ -255,6 +257,5 @@ public function store()
             ' m³. Monto: Q' .
             number_format($monto, 2)
         );
-}
-
+    }
 }
