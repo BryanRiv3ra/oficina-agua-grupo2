@@ -72,4 +72,19 @@ public function obtenerTarifaAbiertaAnterior(string $desde): ?array
         ->orderBy('vigente_desde', 'DESC')
         ->first();
 }
+
+/**
+ * Obtiene la tarifa vigente para una fecha determinada.
+ */
+public function obtenerTarifaVigente(string $fecha): ?array
+{
+    return $this->where('activo', 1)
+        ->where('vigente_desde <=', $fecha)
+        ->groupStart()
+            ->where('vigente_hasta >=', $fecha)
+            ->orWhere('vigente_hasta IS NULL', null, false)
+        ->groupEnd()
+        ->orderBy('vigente_desde', 'DESC')
+        ->first();
+}
 }
