@@ -43,3 +43,9 @@ $routes->get('estado-cuenta', 'EstadoCuentaController::index');
 
 //Recibos
 $routes->get('recibo/(:num)', 'ReciboController::ver/$1');
+
+
+// Pagos
+$routes->get('pagos', 'PagoController::index');
+$routes->get('pagos/registrar/(:num)', 'PagoController::create/$1');
+$routes->post('pagos/guardar', 'PagoController::store');
