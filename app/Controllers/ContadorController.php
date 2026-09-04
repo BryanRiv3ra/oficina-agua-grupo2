@@ -42,14 +42,25 @@ class ContadorController extends BaseController
             'vistaActiva' => 'contadores',
             'contador'    => null,
             'clientes'    => $this->clienteModel->where('activo', 1)->orderBy('nombre', 'ASC')->findAll(),
+            'token'       => bin2hex(random_bytes(16)),
         ]);
     }
 
     public function store()
     {
+        $token = trim((string) $this->request->getPost('token'));
+
+        // Si ya existe un contador con este mismo token, no lo dupliques.
+        if ($token !== '' && $this->contadorModel->where('token', $token)->first()) {
+            return redirect()->to('/contadores')->with('mensaje', 'Contador creado correctamente.');
+        }
+
         $this->contadorModel->setValidationRules($this->contadorModel->validationRules());
 
-        if (!$this->contadorModel->save($this->request->getPost())) {
+        $datos = $this->request->getPost();
+        $datos['token'] = $token !== '' ? $token : bin2hex(random_bytes(16));
+
+        if (!$this->contadorModel->save($datos)) {
             return redirect()->back()->withInput()
                 ->with('errors', $this->contadorModel->errors());
         }

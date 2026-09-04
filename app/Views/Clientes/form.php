@@ -21,6 +21,15 @@
     <form method="post" action="<?= $editando ? site_url('clientes/actualizar/' . $cliente['id']) : site_url('clientes/guardar') ?>">
       <?= csrf_field() ?>
 
+      <?php if (!$editando): ?>
+        <input type="hidden" name="token" value="<?= esc($token ?? '') ?>">
+        <script>
+          document.querySelector('form').addEventListener('submit', function () {
+            this.querySelector('button[type="submit"]').disabled = true;
+          });
+        </script>
+      <?php endif; ?>
+
       <div class="mb-3">
         <label class="form-label fw-semibold">Nombre</label>
         <input type="text" name="nombre" class="form-control" required

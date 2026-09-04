@@ -7,7 +7,7 @@ class ClienteModel extends Model
 {
     protected $table            = 'clientes';
     protected $primaryKey       = 'id';
-    protected $allowedFields    = ['nombre', 'telefono', 'direccion_principal', 'activo'];
+    protected $allowedFields    = ['nombre', 'telefono', 'direccion_principal', 'activo', 'token'];
     protected $useTimestamps    = true;
     protected $createdField     = 'creado_en';
     protected $updatedField     = 'actualizado_en';
@@ -16,6 +16,7 @@ class ClienteModel extends Model
         'nombre'               => 'required|min_length[3]|max_length[150]',
         'direccion_principal'  => 'required|min_length[5]',
         'telefono'             => 'permit_empty|max_length[20]',
+        'token'                => 'permit_empty|is_unique[clientes.token]|max_length[64]',
     ];
 
     protected $validationMessages = [

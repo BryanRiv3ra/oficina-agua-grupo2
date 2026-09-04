@@ -21,6 +21,15 @@
     <form method="post" action="<?= $editando ? site_url('contadores/actualizar/' . $contador['id']) : site_url('contadores/guardar') ?>">
       <?= csrf_field() ?>
 
+      <?php if (!$editando): ?>
+        <input type="hidden" name="token" value="<?= esc($token ?? '') ?>">
+        <script>
+          document.querySelector('form').addEventListener('submit', function () {
+            this.querySelector('button[type="submit"]').disabled = true;
+          });
+        </script>
+      <?php endif; ?>
+
       <div class="mb-3">
         <label class="form-label fw-semibold">Cliente</label>
         <select name="cliente_id" class="form-select" required>
