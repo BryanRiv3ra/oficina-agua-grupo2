@@ -37,15 +37,24 @@ class ClienteController extends BaseController
             'titulo'      => 'Nuevo cliente',
             'vistaActiva' => 'clientes',
             'cliente'     => null,
+            'token'       => bin2hex(random_bytes(16)), // 🆕
         ]);
     }
 
-    // Guardar cliente nuevo
     public function store()
     {
-        if (!$this->clienteModel->save($this->request->getPost())) {
-            return redirect()->back()->withInput()
-                ->with('errors', $this->clienteModel->errors());
+        $token = trim((string) $this->request->getPost('token'));
+
+        // 🆕 Si ya existe un cliente con este mismo token, no lo dupliques.
+        if ($token !== '' && $this->clienteModel->where('token', $token)->first()) {
+            return redirect()->to('/clientes')->with('mensaje', 'Cliente creado correctamente.');
+        }
+
+        $datos = $this->request->getPost();
+        $datos['token'] = $token !== '' ? $token : bin2hex(random_bytes(16)); // 🆕
+
+        if (!$this->clienteModel->save($datos)) {
+            return redirect()->back()->withInput()->with('errors', $this->clienteModel->errors());
         }
 
         return redirect()->to('/clientes')->with('mensaje', 'Cliente creado correctamente.');
