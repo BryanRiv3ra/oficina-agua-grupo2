@@ -79,15 +79,25 @@ class PagoController extends BaseController
                 ->with('mensaje', 'El pago ya había sido registrado correctamente.');
         }
 
+        $metodo       = $this->request->getPost('metodo');
+        $numeroBoleta = trim((string) $this->request->getPost('numero_boleta'));
+
+        if (in_array($metodo, ['deposito', 'transferencia'], true) && $numeroBoleta === '') {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'El número de boleta es obligatorio para pagos por depósito o transferencia.');
+        }
+
         $datos = [
-            'lectura_id'          => (int) $this->request->getPost('lectura_id'),
-            'usuario_registro_id' => (int) session('usuario_id'),
-            'monto'               => $this->request->getPost('monto'),
-            'fecha_pago'          => $this->request->getPost('fecha_pago'),
-            'metodo'              => $this->request->getPost('metodo'),
-            'numero_boleta'       => $this->request->getPost('numero_boleta') ?: null,
-            'observaciones'       => $this->request->getPost('observaciones') ?: null,
-            'token'               => $token,
+        'lectura_id'          => (int) $this->request->getPost('lectura_id'),
+        'usuario_registro_id' => (int) session('usuario_id'),
+        'monto'               => $this->request->getPost('monto'),
+        'fecha_pago'          => $this->request->getPost('fecha_pago'),
+        'metodo'              => $metodo,
+        'numero_boleta'       => $numeroBoleta ?: null,
+        'observaciones'       => $this->request->getPost('observaciones') ?: null,
+        'token'               => $token,
         ];
 
         // 2) Intento de registro. Si dos peticiones llegan casi a la vez, ambas pueden
