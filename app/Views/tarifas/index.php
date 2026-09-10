@@ -2,18 +2,6 @@
 
 <?= $this->section('contenido') ?>
 
-<?php if (session('mensaje')): ?>
-    <div class="alert alert-success">
-        <?= esc(session('mensaje')) ?>
-    </div>
-<?php endif; ?>
-
-<?php if (session('error')): ?>
-    <div class="alert alert-danger">
-        <?= esc(session('error')) ?>
-    </div>
-<?php endif; ?>
-
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h2 class="h6 fw-bold text-primary mb-0">Tarifas</h2>
 
