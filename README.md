@@ -1,69 +1,104 @@
-# CodeIgniter 4 Application Starter
+# AQUORA — Sistema Integrado de Gestión de Agua
 
-## What is CodeIgniter?
+Sistema web para la administración de clientes, contadores, tarifas, lecturas, pagos y recibos de una oficina municipal de agua potable. Proyecto desarrollado por el **Grupo 2 — Stack 1** como parte del curso de Desarrollo Web.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## Demo en vivo
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+El sistema está desplegado y disponible públicamente en:
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+### 🔗 [https://aquora.duckdns.org](https://aquora.duckdns.org)
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+Puedes ingresar directamente con las credenciales de prueba indicadas en la sección [Credenciales de prueba](#credenciales-de-prueba) más abajo, sin necesidad de instalar nada localmente.
 
-## Installation & updates
+## Equipo de desarrollo
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+| Nombre completo | Carnet | Correo electrónico | Rol en el equipo |
+|---|---|---|---|
+| Bryan Josué Rivera Hernández — **Líder del equipo** | 0905-23-1623 | briverah6@miumg.edu.gt | Coordinador + CRUD + UI / Integración |
+| Blanky Marisol López Marroquín | 0905-23-5227 | blopezm50@miumg.edu.gt | Base de datos |
+| Jesús Alberto Quintanilla Monzón | 0905-21-9366 | jquintanillam2@miumg.edu.gt | Tarifas / Lecturas |
+| Yenci María Hernández Martínez | 0905-23-6756 | yhernandezm11@miumg.edu.gt | Autenticación y roles |
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+**Proyecto en Jira:** [Grupo 2 Stack 1 — Tablero](https://miumg-team-os5t4oqe.atlassian.net/?continue=https%3A%2F%2Fmiumg-team-os5t4oqe.atlassian.net%2Fwelcome%2Fsoftware%3FprojectId%3D10001&atlOrigin=eyJpIjoiYjI4Yzk4ODQ3ODMyNGIyM2FiZTM3MzJjMzdiNDY4YmUiLCJwIjoiamlyYS1zb2Z0d2FyZSJ9)
 
-## Setup
+## Descripción
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+AQUORA centraliza el ciclo completo del servicio de agua: registro de clientes y sus contadores, definición de tarifas vigentes, captura de lecturas mensuales, cálculo automático de consumo y monto a pagar, registro de pagos y generación de recibos imprimibles. El acceso está controlado por roles, de modo que cada usuario solo ve y utiliza las opciones que le corresponden.
 
-## Important Change with index.php
+## Funcionalidades principales
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+- **Autenticación y control de acceso** con tres roles: Administrador, Secretaria y Lector. Cada rol tiene un menú y permisos distintos; el sistema bloquea el acceso directo por URL a secciones no autorizadas.
+- **Panel principal** con indicadores generales: clientes activos, contadores activos, sectores cubiertos y lecturas pendientes de pago.
+- **Gestión de clientes y contadores**, incluyendo dirección de servicio y sector de cada contador.
+- **Gestión de tarifas**: tarifa simple por metro cúbico, con vigencia (`vigente_desde` / `vigente_hasta`). Al crear una tarifa nueva, la anterior se cierra automáticamente, y el sistema rechaza tarifas cuyo periodo se solape con una ya existente.
+- **Registro de lecturas**, con cálculo automático de consumo (lectura actual − lectura anterior) y monto a pagar según la tarifa vigente.
+- **Registro de pagos**, con validación de número de boleta obligatorio cuando el método de pago es depósito o transferencia.
+- **Recibo de pago imprimible**, con formato de tique (ticket), que incluye los datos del cliente, el contador, el periodo, el desglose de lecturas/consumo/tarifa y el total a pagar.
+- **Estado de cuenta** por cliente.
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+## Tecnologías utilizadas
 
-**Please** read the user guide for a better explanation of how CI4 works!
+- **Backend:** PHP 8.3 + CodeIgniter 4
+- **Base de datos:** MariaDB / MySQL
+- **Frontend:** Bootstrap 5.3, tipografías Inter y JetBrains Mono
+- **Control de versiones:** Git y GitHub (flujo de ramas `feature/*` y `fix/*` hacia `develop`)
+- **Gestión del proyecto:** Jira
 
-## Repository Management
+## Instalación y configuración local
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+Esta sección es solo para quien quiera correr el proyecto en su propia computadora (por ejemplo, para seguir desarrollando). Para simplemente usar el sistema, entra directo a la [demo en vivo](#demo-en-vivo).
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+### Requisitos previos
 
-## Server Requirements
+- PHP 8.1 o superior
+- Composer
+- MariaDB o MySQL
+- Git
 
-PHP version 8.2 or higher is required, with the following extensions installed:
+### Pasos
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/BryanRiv3ra/oficina-agua-grupo2.git
+   cd oficina-agua-grupo2
+   ```
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - The end of life date for PHP 8.1 was December 31, 2025.
-> - If you are still using below PHP 8.2, you should upgrade immediately.
-> - The end of life date for PHP 8.2 will be December 31, 2026.
+2. Instalar las dependencias de PHP:
+   ```bash
+   composer install
+   ```
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+3. Copiar el archivo de entorno de ejemplo y configurarlo:
+   ```bash
+   cp .env.example .env
+   ```
+   Editar `.env` y descomentar/completar la sección de `DATABASE` con los datos de tu servidor local (hostname, nombre de base de datos, usuario y contraseña).
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+4. Ejecutar las migraciones para crear las tablas:
+   ```bash
+   php spark migrate
+   ```
+
+5. (Opcional) Ejecutar los seeders para cargar datos de ejemplo, incluyendo el usuario administrador:
+   ```bash
+   php spark db:seed RolesUsuariosSeeder
+   ```
+
+6. Levantar el servidor de desarrollo:
+   ```bash
+   php spark serve
+   ```
+
+7. Abrir el navegador en `http://localhost:8080/index.php/login`.
+
+### Credenciales de prueba
+
+| Rol | Correo | Contraseña |
+|---|---|---|
+| Administrador | admin@oficina-agua.local | Admin1234 |
+| Secretaria | secretaria@oficina-agua.local | Secretaria1234 |
+| Lector | lector@oficina-agua.local | Lector1234 |
+
+## Manual de usuario
+
+Consultar el documento [`Manual_de_usuario_AQUORA.pdf`](./Manual_de_usuario_AQUORA.pdf) incluido en este repositorio para una guía visual paso a paso de cada módulo del sistema.
