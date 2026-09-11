@@ -9,7 +9,7 @@
 <form method="get" action="<?= site_url('pagos') ?>" class="row g-2 mb-4">
   <div class="col-md-6">
     <input type="text" name="q" class="form-control"
-           placeholder="Buscar por cliente o número de registro del contador"
+           placeholder="Buscar por cliente o código de contador"
            value="<?= esc($busqueda ?? '') ?>">
   </div>
   <div class="col-auto">
@@ -36,7 +36,6 @@
           <tr>
             <th>Cliente</th>
             <th>Contador</th>
-            <th>Sector</th>
             <th>Período</th>
             <th>Fecha lectura</th>
             <th class="text-end">Consumo</th>
@@ -49,7 +48,6 @@
             <tr>
               <td><?= esc($fila['cliente']) ?></td>
               <td><?= esc($fila['contador']) ?></td>
-              <td><?= esc($fila['sector'] ?? '—') ?></td>
               <td><?= esc($fila['periodo']) ?></td>
               <td><?= esc($fila['fecha_lectura']) ?></td>
               <td class="text-end"><?= esc($fila['consumo']) ?></td>
