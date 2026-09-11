@@ -20,11 +20,11 @@
     <div class="container-fluid py-4 px-3 px-md-4">
 
       <?php if (session('error')): ?>
-        <div class="alert alert-danger"><?= esc(session('error')) ?></div>
+        <div class="alert alert-danger no-imprimir"><?= esc(session('error')) ?></div>
       <?php endif; ?>
 
       <?php if (session('mensaje')): ?>
-        <div class="alert alert-success"><?= esc(session('mensaje')) ?></div>
+        <div class="alert alert-success no-imprimir"><?= esc(session('mensaje')) ?></div>
       <?php endif; ?>
 
       <?= $this->renderSection('contenido') ?>
