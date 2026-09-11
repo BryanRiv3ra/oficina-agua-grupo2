@@ -2,9 +2,6 @@
 
 <?= $this->section('contenido') ?>
 
-<?php if (session('mensaje')): ?>
-  <div class="alert alert-success"><?= session('mensaje') ?></div>
-<?php endif; ?>
 
 <div class="d-flex justify-content-between align-items-center mb-3">
   <h2 class="h6 fw-bold text-primary mb-0">Contadores</h2>
