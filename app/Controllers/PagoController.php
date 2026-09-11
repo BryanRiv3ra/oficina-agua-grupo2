@@ -79,10 +79,7 @@ class PagoController extends BaseController
                 ->with('mensaje', 'El pago ya había sido registrado correctamente.');
         }
 
-<<<<<<< Updated upstream
-=======
          // 🆕 2) Validación condicional: depósito/transferencia requieren número de boleta.
->>>>>>> Stashed changes
         $metodo       = $this->request->getPost('metodo');
         $numeroBoleta = trim((string) $this->request->getPost('numero_boleta'));
 
