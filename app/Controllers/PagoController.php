@@ -79,6 +79,10 @@ class PagoController extends BaseController
                 ->with('mensaje', 'El pago ya había sido registrado correctamente.');
         }
 
+<<<<<<< Updated upstream
+=======
+         // 🆕 2) Validación condicional: depósito/transferencia requieren número de boleta.
+>>>>>>> Stashed changes
         $metodo       = $this->request->getPost('metodo');
         $numeroBoleta = trim((string) $this->request->getPost('numero_boleta'));
 
@@ -100,17 +104,12 @@ class PagoController extends BaseController
         'token'               => $token,
         ];
 
-        // 2) Intento de registro. Si dos peticiones llegan casi a la vez, ambas pueden
-        //    haber pasado el paso 1; el índice UNIQUE de la base es el que corta el
-        //    duplicado de verdad, y ese caso se atiende en el catch.
         try {
             if (! $this->pagoModel->insert($datos)) {
                 return redirect()->back()->withInput()
                     ->with('errores', $this->pagoModel->errors());
             }
         } catch (\Throwable $e) {
-            // Duplicado por token o por lectura ya pagada: el resultado para el
-            // usuario es el mismo, el pago quedó registrado una sola vez.
             if ($this->pagoModel->buscarPorToken($token) !== null
                 || $this->pagoModel->buscarPorLectura($datos['lectura_id']) !== null) {
                 return redirect()->to('/pagos')
