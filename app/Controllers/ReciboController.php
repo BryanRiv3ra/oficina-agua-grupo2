@@ -11,6 +11,7 @@ class ReciboController extends BaseController
 
         $recibo = $db->table('lecturas l')
             ->select('l.id, l.periodo, l.fecha_lectura, l.lectura_anterior, l.lectura_actual, l.consumo, l.monto,
+                      l.contador_id,
                       c.nombre AS cliente_nombre, c.direccion_principal,
                       ct.numero_registro, ct.direccion_servicio, ct.sector,
                       t.monto_por_unidad,
@@ -26,6 +27,14 @@ class ReciboController extends BaseController
         if (! $recibo) {
             return redirect()->to('/lecturas')->with('error', 'Recibo no encontrado.');
         }
+
+        // 🆕 Número secuencial de esta lectura, específico para este contador.
+        $secuencia = $db->table('lecturas')
+            ->where('contador_id', $recibo['contador_id'])
+            ->where('id <=', $recibo['id'])
+            ->countAllResults();
+
+        $recibo['numero_recibo'] = $recibo['numero_registro'] . '-' . str_pad($secuencia, 4, '0', STR_PAD_LEFT);
 
         return view('recibos/ver', [
             'titulo' => 'Recibo de pago',
