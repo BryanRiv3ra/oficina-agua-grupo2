@@ -96,8 +96,8 @@ Esta sección es solo para quien quiera correr el proyecto en su propia computad
 | Rol | Correo | Contraseña |
 |---|---|---|
 | Administrador | admin@oficina-agua.local | Admin1234 |
-| Secretaria | secretaria@oficina-agua.local | Admin1234 |
-| Lector | lector@oficina-agua.local | Admin1234 |
+| Secretaria | secretaria@oficina-agua.local | Secretaria1234 |
+| Lector | lector@oficina-agua.local | Lector1234 |
 
 ## Manual de usuario
 
