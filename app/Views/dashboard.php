@@ -29,7 +29,7 @@
     --texto-cuerpo:  #6c757d;
     --borde-suave:   rgba(0,0,0,.06);
     --velo-franja:   linear-gradient(90deg, rgba(255,255,255,.88) 0%, rgba(255,255,255,.70) 40%, rgba(255,255,255,.20) 100%);
-        --foto-franja:   url('<?= base_url('assets/img/Lago-de-noche.png') ?>');
+        --foto-franja:   url('<?= base_url('assets/img/lagoAtitlan.png') ?>');
   }
 
   html.tema-oscuro {
