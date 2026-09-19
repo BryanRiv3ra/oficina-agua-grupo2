@@ -46,7 +46,38 @@
   }
 
   .franja-bienvenida .card-body { position: relative; }
+
+    body.modo-oscuro {
+    background-color: #121417;
+    color: #e4e6eb;
+  }
+
+  body.modo-oscuro .card {
+    background-color: #1c1f24;
+    color: #e4e6eb;
+  }
+
+  body.modo-oscuro .rotulo-dato,
+  body.modo-oscuro .text-muted {
+    color: #adb5bd !important;
+  }
+
+  body.modo-oscuro .franja-bienvenida::before {
+    background: linear-gradient(90deg, rgba(18,20,23,.88) 0%, rgba(18,20,23,.70) 40%, rgba(18,20,23,.20) 100%);
+  }
+
+  body.modo-oscuro #panel {
+    background-color: #121417;
+  }
+
 </style>
+
+<div class="d-flex justify-content-end mb-3">
+  <button type="button" id="btnModoOscuro" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-moon-stars-fill" id="iconoModoOscuro"></i>
+    <span id="textoModoOscuro">Modo oscuro</span>
+  </button>
+</div>
 
 <div class="row g-3 mb-4">
 
@@ -123,5 +154,42 @@
     </p>
   </div>
 </div>
+
+<?= $this->section('scripts') ?>
+<script>
+  (function () {
+    const CLAVE = 'aquora-tema';
+    const body = document.body;
+    const boton = document.getElementById('btnModoOscuro');
+    const icono = document.getElementById('iconoModoOscuro');
+    const texto = document.getElementById('textoModoOscuro');
+
+    function aplicarTema(tema) {
+      if (tema === 'oscuro') {
+        body.classList.add('modo-oscuro');
+        icono.classList.remove('bi-moon-stars-fill');
+        icono.classList.add('bi-sun-fill');
+        texto.textContent = 'Modo claro';
+      } else {
+        body.classList.remove('modo-oscuro');
+        icono.classList.remove('bi-sun-fill');
+        icono.classList.add('bi-moon-stars-fill');
+        texto.textContent = 'Modo oscuro';
+      }
+    }
+
+    // Al cargar la página, aplica lo que estaba guardado
+    const temaGuardado = localStorage.getItem(CLAVE) || 'claro';
+    aplicarTema(temaGuardado);
+
+    // Al hacer clic, alterna y guarda la preferencia
+    boton.addEventListener('click', function () {
+      const nuevoTema = body.classList.contains('modo-oscuro') ? 'claro' : 'oscuro';
+      aplicarTema(nuevoTema);
+      localStorage.setItem(CLAVE, nuevoTema);
+    });
+  })();
+</script>
+<?= $this->endSection() ?>
 
 <?= $this->endSection() ?>
