@@ -102,3 +102,14 @@ Esta sección es solo para quien quiera correr el proyecto en su propia computad
 ## Manual de usuario
 
 Consultar el documento [`Manual_de_usuario_AQUORA.pdf`](./Manual_de_usuario_AQUORA.pdf) incluido en este repositorio para una guía visual paso a paso de cada módulo del sistema.
+
+
+MEJORAS IMPLEMENTADAS DURANTE EL PARCIAL 2 DESARROLLO WEB Bryan Rivera
+
+MEJORA 8 Evitar doble envio de Formularios
+Formularios usados Clientes y Contadores para la implementacion
+
+MEJORA 9 Estado Vacio - Sin Resultado
+Formularios usados Clientes y Contadores para la implementacion
+
+
