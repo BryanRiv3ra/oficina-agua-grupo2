@@ -18,17 +18,27 @@
 
 <div class="card border-0 shadow-sm">
   <div class="card-body">
-    <form method="post" action="<?= $editando ? site_url('contadores/actualizar/' . $contador['id']) : site_url('contadores/guardar') ?>">
+    <form method="post" id="form-contador" action="<?= $editando ? site_url('contadores/actualizar/' . $contador['id']) : site_url('contadores/guardar') ?>">
       <?= csrf_field() ?>
 
       <?php if (!$editando): ?>
         <input type="hidden" name="token" value="<?= esc($token ?? '') ?>">
+        <?php endif;?>
+
         <script>
-          document.querySelector('form').addEventListener('submit', function () {
-            this.querySelector('button[type="submit"]').disabled = true;
+          document.querySelector('#form-contador').addEventListener('submit', function () {
+            const btn = this.querySelector('button[type="submit"]');
+            const btnTextoOriginal = btn.textContent;
+            
+            btn.disabled = true;
+            btn.textContent = 'Guardando...';
+
+            setTimeout(() => {
+              btn.disabled = false;
+              btn.textContent = btnTextoOriginal;
+            }, 5000);
           });
         </script>
-      <?php endif; ?>
 
       <div class="mb-3">
         <label class="form-label fw-semibold">Cliente</label>
