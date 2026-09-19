@@ -29,6 +29,7 @@
     --texto-cuerpo:  #6c757d;
     --borde-suave:   rgba(0,0,0,.06);
     --velo-franja:   linear-gradient(90deg, rgba(255,255,255,.88) 0%, rgba(255,255,255,.70) 40%, rgba(255,255,255,.20) 100%);
+        --foto-franja:   url('<?= base_url('assets/img/lagoAtitlan.png') ?>');
   }
 
   html.tema-oscuro {
@@ -40,6 +41,7 @@
     --texto-cuerpo:  #adc2cc;
     --borde-suave:   rgba(255,255,255,.08);
     --velo-franja:   linear-gradient(90deg, rgba(15,27,34,.94) 0%, rgba(15,27,34,.80) 40%, rgba(15,27,34,.30) 100%);
+        --foto-franja:   url('<?= base_url('assets/img/atitlan-noche.png') ?>');
   }
 
   /* El fondo del área de contenido solo se pinta en modo oscuro,
@@ -118,7 +120,7 @@
     position: relative;
     border-radius: 14px;
     overflow: hidden;
-    background: url('<?= base_url('assets/img/lagoAtitlan.png') ?>') center center / 100% auto no-repeat;
+        background: var(--foto-franja) center center / 100% auto no-repeat;
   }
 
   .franja-bienvenida::before {
