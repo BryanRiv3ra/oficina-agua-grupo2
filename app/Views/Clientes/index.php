@@ -38,14 +38,24 @@
               <form action="<?= site_url('clientes/eliminar/' . $c['id']) ?>" method="post" class="d-inline" onsubmit="return confirm('¿Seguro que quieres desactivar a este cliente?');"> <?= csrf_field() ?>
               <button type="submit" class="btn btn-sm btn-outline-danger">Desactivar</button></form>
             </td>
-
-
-
-
           </tr>
         <?php endforeach; ?>
+
         <?php if (empty($clientes)): ?>
-          <tr><td colspan="4" class="text-center text-muted py-4">No hay clientes registrados.</td></tr>
+            <tr>
+              <td colspan="4" class="text-center py-5">
+                <div class="text-muted">
+                  <div class="fs-1 mb-2">🔍</div>
+                  <?php if (!empty($buscar)): ?>
+                  <p class="mb-2">No encontramos clientes que coincidan con "<strong><?= esc($buscar) ?></strong>".</p>
+                  <a href="<?= site_url('clientes') ?>" class="btn btn-outline-secondary btn-sm">Limpiar búsqueda</a>
+                  <?php else: ?>
+                  <p class="mb-2">Todavía no hay clientes registrados.</p>
+                  <a href="<?= site_url('clientes/nuevo') ?>" class="btn btn-primary btn-sm">+ Registrar el primer cliente</a>
+                <?php endif; ?>
+              </div>
+            </td>
+          </tr>
         <?php endif; ?>
       </tbody>
     </table>
